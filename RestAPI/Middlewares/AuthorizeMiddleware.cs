@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using RestAPI.Services;
 using System.Security.Claims;
 
 namespace RestAPI.Middlewares
@@ -15,7 +14,7 @@ namespace RestAPI.Middlewares
             _config = config;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IAuthService authService)
         {
             var endpoint = context.GetEndpoint();
             if (endpoint != null)
@@ -30,22 +29,25 @@ namespace RestAPI.Middlewares
                         if (bearerToken.StartsWith("Bearer "))
                         {
                             bearerToken = bearerToken.Substring(7);
-                            if (bearerToken.Equals(_config.GetSection("API:Token").Value))
+                            if (await authService.GetSessionByBearerTokenAsync(bearerToken, true) is Session session)
                             {
-                                // Claims erstellen
-                                var claims = new List<Claim>()
+                                if(session.ExpirationDateBearerToken.UtcDateTime > DateTime.UtcNow)
                                 {
-                                    new Claim(ClaimTypes.NameIdentifier, "3939"),
-                                    new Claim(ClaimTypes.Role, "Administrator")
-                                };
 
-                                // ClaimsPrincipal erstellen und setzen
-                                var identity = new ClaimsIdentity(claims, "OCPPScheme");
-                                context.User = new ClaimsPrincipal(identity);
+                                    // Claims erstellen
+                                    var claims = new List<Claim>()
+                                    {
+                                        new Claim(ClaimTypes.NameIdentifier, session.User.Id.ToString()),
+                                        new Claim(ClaimTypes.Role, Enum.GetName(session.User.Role.Role)!)
+                                    };
 
-                                isAuthorized = true;
+                                    // ClaimsPrincipal erstellen und setzen
+                                    var identity = new ClaimsIdentity(claims, "FFXIIIScheme");
+                                    context.User = new ClaimsPrincipal(identity);
+
+                                    isAuthorized = true;
+                                }
                             }
-                                
                         }
                     }
 

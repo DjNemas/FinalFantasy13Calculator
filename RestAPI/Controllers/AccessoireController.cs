@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RestAPI.Database.Models;
-using RestAPI.DTOs;
-using RestAPI.Interfaces;
-using RestAPI.Utils;
 using System.ComponentModel;
 
 namespace RestAPI.Controllers
@@ -12,7 +8,12 @@ namespace RestAPI.Controllers
     [ApiController]
     public class AccessoireController : BaseController
     {
-        public AccessoireController(IDatabaseService databaseService) : base(databaseService) { }
+        private readonly IAccessoireService _accessoireService;
+
+        public AccessoireController(IAccessoireService accessoireService)
+        {
+            _accessoireService = accessoireService;
+        }
 
         [HttpGet]
         [ProducesResponseType(typeof(AccessoireResponse), 200, "application/json")]
@@ -23,13 +24,13 @@ namespace RestAPI.Controllers
         {
             if(id == 0)
             {
-                var accessoire = await _databaseService.GetAccessoire();
+                var accessoire = await _accessoireService.GetAccessoire();
                 var response = Mapper.MapPropertys<AccessoireResponse>(accessoire);
                 return Ok(response);
             }
             if (id > 0)
             {
-                var accessoire = await _databaseService.GetAccessoire(id);
+                var accessoire = await _accessoireService.GetAccessoire(id);
                 if (accessoire is null)
                     return NotFound("Accessoire with the given ID not found.");
 
@@ -51,17 +52,17 @@ namespace RestAPI.Controllers
             if (string.IsNullOrEmpty(request.Name))
                 return BadRequest("Name is required.");
 
-            if (await _databaseService.AccessoireExist(request.Name))
+            if (await _accessoireService.AccessoireExist(request.Name))
                 return Conflict("Accessoire with the given name already exists.");
 
             if(request.UpgradeToAccessoireId is not null)
             {
-                if (!await _databaseService.AccessoireExist(request.UpgradeToAccessoireId.Value))
+                if (!await _accessoireService.AccessoireExist(request.UpgradeToAccessoireId.Value))
                     return BadRequest($"The specified upgrade accessory does not exist: ID {request.UpgradeToAccessoireId}");
             }
 
             var accessoire = Mapper.MapPropertys<Accessoire>(request);
-            accessoire = await _databaseService.AddAccessoire(accessoire);
+            accessoire = await _accessoireService.AddAccessoire(accessoire);
 
             var response = Mapper.MapPropertys<AccessoireResponse>(accessoire);
             return Ok(response);
@@ -74,18 +75,18 @@ namespace RestAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status409Conflict, "text/plain")]
         public async Task<IActionResult> UpdateAccessoire([FromBody] UpdateAccessoireRequest request)
         {
-            var accessoire = await _databaseService.GetAccessoire(request.Id);
+            var accessoire = await _accessoireService.GetAccessoire(request.Id);
             if (accessoire == null)
                 return NotFound("Accessoire with the given ID not found.");
 
-            if (request.Name != accessoire.Name && await _databaseService.AccessoireExist(request.Name))
+            if (request.Name != accessoire.Name && await _accessoireService.AccessoireExist(request.Name))
                 return Conflict("Accessoire with the given Name already exist.");
 
             if(request.UpgradeToAccessoireId is not null)
             {
                 if (request.UpgradeToAccessoireId == accessoire.Id)
                     return BadRequest("The UpgradeToAccessoireId can't be the same as this item.");
-                if (!await _databaseService.AccessoireExist(request.UpgradeToAccessoireId.Value))
+                if (!await _accessoireService.AccessoireExist(request.UpgradeToAccessoireId.Value))
                     return BadRequest($"The specified upgrade accessory does not exist: ID {request.UpgradeToAccessoireId}");
             }
 
@@ -98,7 +99,7 @@ namespace RestAPI.Controllers
             if (remeberUpgradeTo is not null)
                 accessoire.UpgradeToAccessoireId = remeberUpgradeTo;
 
-            await _databaseService.UpdateAccessoire(accessoire);
+            await _accessoireService.UpdateAccessoire(accessoire);
 
             var response = Mapper.MapPropertys<AccessoireResponse>(accessoire);
 

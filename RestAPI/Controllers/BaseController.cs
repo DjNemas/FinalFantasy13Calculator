@@ -1,15 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestAPI.Interfaces;
+using Microsoft.AspNetCore.Mvc.Filters;
+using RestAPI.Models;
+using System.Security.Claims;
 
 namespace RestAPI.Controllers
 {
-    public abstract class BaseController : ControllerBase
+    public abstract class BaseController : Controller
     {
-         protected readonly IDatabaseService _databaseService;
+        protected CurrentUser? CurrentUser;
 
-        public BaseController(IDatabaseService databaseService)
+        public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            _databaseService = databaseService;
+            if(User.Identity is not null && User.Identity.IsAuthenticated)
+            {
+                CurrentUser = new CurrentUser
+                {
+                    Id = uint.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value),
+                    Role = (Roles)Enum.Parse(typeof(Roles), User.FindFirst(ClaimTypes.Role)!.Value)
+                };
+            }
+            return base.OnActionExecutionAsync(context, next);
         }
     }
 }

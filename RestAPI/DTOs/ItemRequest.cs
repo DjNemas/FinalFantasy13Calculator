@@ -1,5 +1,4 @@
-﻿using RestAPI.Database.Enums;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RestAPI.DTOs
 {
@@ -14,15 +13,9 @@ namespace RestAPI.DTOs
         public required uint SellPrice { get; set; }
         public required NexusGroup NexusGroup { get; set; }
         public Catalysator Catalysator { get; set; } = Catalysator.None;
-
-        [System.ComponentModel.DefaultValue(null)]
         public string? SpecialEffect { get; set; } = null;
-        
-        [System.ComponentModel.DefaultValue(false)]
         public bool Buyable { get; set; } = false;
-
-        [System.ComponentModel.DefaultValue(null)]
         public uint? BuyPrice { get; set; } = null;
-        
+
     }
 }

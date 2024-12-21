@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestAPI.Database;
 
@@ -11,9 +12,11 @@ using RestAPI.Database;
 namespace RestAPI.Migrations
 {
     [DbContext(typeof(FFXIIIDbContext))]
-    partial class FFXIIIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241221065909_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,18 +161,6 @@ namespace RestAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Role = "Administrator"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Role = "User"
-                        });
                 });
 
             modelBuilder.Entity("RestAPI.Database.Models.Accessoire", b =>

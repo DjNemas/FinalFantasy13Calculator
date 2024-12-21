@@ -1,9 +1,15 @@
-using Microsoft.EntityFrameworkCore;
+global using RestAPI.Database;
+global using RestAPI.Database.Models;
+global using RestAPI.Interfaces;
+global using RestAPI.DTOs;
+global using RestAPI.Services;
+global using System.ComponentModel.DataAnnotations;
+global using RestAPI.Database.Enums;
+global using Microsoft.EntityFrameworkCore;
+global using System.Text;
+global using RestAPI.Utils;
 using Microsoft.OpenApi.Models;
-using RestAPI.Database;
-using RestAPI.Interfaces;
 using RestAPI.Middlewares;
-using RestAPI.Services;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text.Json.Serialization;
 
@@ -13,7 +19,7 @@ namespace RestAPI
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder(args);      
 
             builder.Services.AddDbContext<FFXIIIDbContext>(options =>
             {
@@ -28,9 +34,6 @@ namespace RestAPI
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-                
-
-            //builder.Services.AddOpenApi();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -48,8 +51,10 @@ namespace RestAPI
                 // Addition Nuget for Swagger UI to enable Bearer Token input for Endpoints with Authorize Attribute
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
-                        
-            builder.Services.AddScoped<IDatabaseService, DatabaseService>();
+
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IAccessoireService, AccessoireService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
 

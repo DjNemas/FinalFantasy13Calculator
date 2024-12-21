@@ -1,24 +1,16 @@
-﻿namespace RestAPI.Utils
+﻿using System.Reflection;
+
+namespace RestAPI.Utils
 {
     public class Mapper
     {
-        public static T MapPropertys<T>(object source)
+        public static T MapPropertys<T>(object source, bool ignoreNull = true)
         {
             var sourceProperties = source.GetType().GetProperties();
             var destinationProperties = typeof(T).GetProperties();
-            var destination = Activator.CreateInstance<T>();
-            foreach (var sourceProperty in sourceProperties)
-            {
-                foreach (var destinationProperty in destinationProperties)
-                {
-                    if (sourceProperty.Name == destinationProperty.Name)
-                    {
-                        destinationProperty.SetValue(destination, sourceProperty.GetValue(source));
-                        break;
-                    }
-                }
-            }
-            return destination;
+            var target = Activator.CreateInstance<T>();
+            MapPropertys(source, target, sourceProperties, destinationProperties, ignoreNull);
+            return target;
         }
 
         public static IEnumerable<T> MapPropertys<T>(IEnumerable<object> source)
@@ -31,18 +23,25 @@
             return destinationList;
         }
 
-        public static void MapPropertys<T>(object source, in T target)
+        public static void MapPropertys<T>(object source, in T target, bool ignoreNull = true)
         {
             if(target == null)
                 throw new ArgumentNullException(nameof(target));
 
             var sourceProperties = source.GetType().GetProperties();
             var destinationProperties = target.GetType().GetProperties();
+            MapPropertys(source, target, sourceProperties, destinationProperties, ignoreNull);
+        }
+
+        private static void MapPropertys<T>(object source, T target, PropertyInfo[] sourceProperties, PropertyInfo[] destinationProperties, bool ignoreNull = true)
+        {
             foreach (var sourceProperty in sourceProperties)
             {
+                if (ignoreNull && sourceProperty.GetValue(source) is null)
+                    continue;
                 foreach (var destinationProperty in destinationProperties)
                 {
-                    if (sourceProperty.Name == destinationProperty.Name)
+                    if (sourceProperty.Name == destinationProperty.Name && sourceProperty.PropertyType == destinationProperty.PropertyType)
                     {
                         destinationProperty.SetValue(target, sourceProperty.GetValue(source));
                         break;

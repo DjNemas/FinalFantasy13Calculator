@@ -1,5 +1,4 @@
-﻿using RestAPI.Database.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RestAPI.DTOs
 {
