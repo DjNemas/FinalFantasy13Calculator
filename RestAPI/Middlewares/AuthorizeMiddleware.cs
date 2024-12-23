@@ -6,12 +6,10 @@ namespace RestAPI.Middlewares
     public class AuthorizeMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IConfiguration _config;
 
         public AuthorizeMiddleware(RequestDelegate next, IConfiguration config)
         {
             _next = next;
-            _config = config;
         }
 
         public async Task InvokeAsync(HttpContext context, IAuthService authService)
@@ -26,7 +24,7 @@ namespace RestAPI.Middlewares
                     // Prüfen, ob der Header existiert
                     if (context.Request.Headers.Authorization.FirstOrDefault() is string bearerToken)
                     {
-                        if (bearerToken.StartsWith("Bearer "))
+                        if (bearerToken.StartsWith("Bearer ") || bearerToken.StartsWith("bearer "))
                         {
                             bearerToken = bearerToken.Substring(7);
                             if (await authService.GetSessionByBearerTokenAsync(bearerToken, true) is Session session)

@@ -1,13 +1,13 @@
 global using RestAPI.Database;
 global using RestAPI.Database.Models;
 global using RestAPI.Interfaces;
-global using RestAPI.DTOs;
 global using RestAPI.Services;
 global using System.ComponentModel.DataAnnotations;
-global using RestAPI.Database.Enums;
 global using Microsoft.EntityFrameworkCore;
 global using System.Text;
 global using RestAPI.Utils;
+global using Shared.DTOs;
+global using Shared.Enums;
 using Microsoft.OpenApi.Models;
 using RestAPI.Middlewares;
 using Swashbuckle.AspNetCore.Filters;
@@ -30,10 +30,7 @@ namespace RestAPI
 #endif
             });
 
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            });
+            builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -63,9 +60,12 @@ namespace RestAPI
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                //app.MapOpenApi();
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();

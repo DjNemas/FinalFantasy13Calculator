@@ -1,0 +1,11 @@
+﻿.card-background-color {
+    background-color: #00ddc0;
+}
+
+.card:hover {
+    background-color: #33e7f7; /* Beispiel-Farbe beim Hover */
+}
+
+    .disable-hover:hover {
+        background-color: #00ddc0;
+    }

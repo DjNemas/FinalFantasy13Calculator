@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-utilities.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Homepage.styles.css" asp-append-version="true" />
+</head>
+<body class="background-main-color">
+    <header>
+        <div class="p-3">
+            <div class="row">
+
+                <div class="col">
+                    <a href="">
+                        <img src="~/res/image/shared/hatsune-miku-miku-spin.gif" alt="Avatar" width="100" height="100" />
+                    </a>
+                </div>
+
+                <div class="col">
+                    @if (User.Identity is not null && User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex justify-content-end">
+                            <a href="#" class="btn" role="button" id="openSide">
+                                <img src="~/res/image/shared/default-avatar.jpg" alt="Avatar" class="rounded-circle" width="50" height="50" />
+                            </a>
+                        </div>
+
+                        <div class="side-panel" id="sidePanel">
+                            <div class="d-flex flex-column align-items-end">
+                                <i id="closeIcon" class="bi-x close-icon"></i>
+                            </div>
+                            <div class="card card-body background-main-color" style="border-top: hidden">
+                                <div class="col me-3">
+                                    <div class="row">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <img src="~/res/image/shared/default-avatar.jpg" alt="Avatar" class="rounded-circle" width="50" height="50" />
+                                        </div>
+                                    </div>
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <div class="row">
+                                            <a href="/Admin/Dashboard" class="btn btn-primary btn-group m-2">Admin Dashboard</a>
+                                        </div>
+                                    }
+                                    <div class="row">
+                                        <a class="btn btn-primary btn-group m-2" href="/User/Settings">Settings</a>
+                                    </div>
+                                    <div class="row">
+                                        <a class="btn btn-primary btn-group m-2" href="/Logout">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="button" id="openSide">
+                                Login
+                            </button>
+                        </div>
+
+                        <div class="side-panel" id="sidePanel">
+                            <div class="top-right-div">
+                                <i id="closeIcon" class="bi-x align-self-baseline close-icon "></i>
+                            </div>
+
+                            <div class="card card-body background-main-color">
+                                <form method="post" action="/Login">
+                                    <div class="row m-0">
+                                        <div class="col">
+                                            <label for="username">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" required />
+                                        </div>
+                                        <div class="col">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" required />
+                                        </div>
+                                        <div class="col-auto d-flex align-items-end ps-0 ms-0">
+                                            <button type="submit" class="bg-transparent border-0">
+                                                <i class="bi-send bi-align-end submit-icon-meow"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3 mt-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer">
+        <center>
+            <div class="container">
+                &copy;HatsuneNemas 2024 - @DateTime.UtcNow.Year
+            </div>
+        </center>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿@model IndexViewModel
+@{
+    ViewData["title"] = "Miku Miku Miii";
+}
+@if(!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.IsSuccessMessage ? "alert-success" : "alert-danger") align-self-center alert-dismissible fade show" role="alert">
+        @Model.Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var content in Model.NavigationContent)
+            {
+                <div class="col-md-2 text-center mb-4">
+                    <div class="card card-background-color h-100 @(content.DisableHover ? "disable-hover" : "")">
+                        <a href="@content.LinkPath" class="btn h-100">
+                            <img src="@content.ImageUrl" class="card-img-top" alt="@content.ImageAltText" />
+
+                            <div class="card-body">
+                                <h5 class="card-title">@content.Title</h5>
+                                <p class="card-text">@content.Description</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+         </div>
+    </div>
+</div>

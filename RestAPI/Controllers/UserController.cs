@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RestAPI.Models;
 
 namespace RestAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UserController : BaseController
     {
@@ -17,9 +15,14 @@ namespace RestAPI.Controllers
         }
 
         [HttpGet, Authorize]
+        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK, "application/json")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized, "text/plain")]
         public async Task<IActionResult> GetUser()
         {
-            return Ok(await _userService.GetUserAsync(CurrentUser!.Id, true));
+            var user = await _userService.GetUserAsync(CurrentUser!.Id, true);
+            var response = Mapper.MapPropertys<GetUserResponse>(user!);
+            response.Role = user!.Role.Role;
+            return Ok(response);
         }
     }
 }
