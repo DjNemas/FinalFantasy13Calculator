@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using RestAPI.Models;
 using System.Security.Claims;
 
-namespace RestAPI.Controllers
+namespace Shared.Controllers
 {
     public abstract class BaseController : Controller
     {

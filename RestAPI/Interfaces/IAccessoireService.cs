@@ -1,4 +1,4 @@
-﻿namespace RestAPI.Interfaces
+﻿namespace Shared.Interfaces
 {
     public interface IAccessoireService
     {

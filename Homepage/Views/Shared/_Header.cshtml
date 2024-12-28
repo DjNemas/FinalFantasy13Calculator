@@ -1,0 +1,154 @@
+﻿@{
+    var avatarSrc = $"data:{ViewBag.AvatarMimeType};base64,{ViewBag.AvatarImage}";
+}
+
+<div class="header-container">
+    <div class="position-flex-column-center">
+        <!img class="main-logo" src="/res/image/shared/hatsune-miku-miku-spin.gif" />
+    </div>
+    <div class="position-flex-column-center header-title">
+        Mikus Home
+    </div>
+    <div class="position-flex-column-center">
+        <img onclick="openSide()" class="avatar-img cursor-pointer" src="@avatarSrc" />
+    </div>
+</div>
+
+<div id="side-panel" class="background-main-color">
+    <div class="side-panel-flex-col">
+        <div onclick="closeSide()" class="close-x-button cursor-pointer">❌</div>
+        <img class="avatar-img avatar-img-side disable-pointer-events" src="@avatarSrc" />
+        @if (User.Identity is null || !User.Identity.IsAuthenticated)
+        {
+            <!-- SIDE LOGIN CONTENT-->
+            <div id="login-side-content">
+                <!form class="login-form" method="post" action="login">
+                <div>Login</div>
+                <div class="side-menu-inputs">
+                    <div>
+                        <input class="input" placeholder="Email" type="email" name="email" required>
+                    </div>
+                    <div>
+                        <input class="input" placeholder="Password" type="password" name="password" required>
+                    </div>
+                </div>
+                <div class="side-menu-buttons">
+                    <button type="submit" class="btn cursor-pointer">
+                        <strong>Login</strong>
+                        <div id="container-stars">
+                            <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button>
+                    <button type="button" class="btn cursor-pointer" onclick="showRegister()">
+                        <strong>Register</strong>
+                        <div id="container-stars">
+                            <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button>
+                </div>
+                </!form>
+            </div>
+            <!-- SIDE REGISTER CONTENT -->
+            <div id="register-side-content" class="hide">
+                <!form class="login-form" method="post" action="register">
+                <div>Register</div>
+                <div class="side-menu-inputs">
+                    <div>
+                        <input class="input" placeholder="Email" type="email" name="email" required>
+                    </div>
+                    <div>
+                        <input class="input" placeholder="Password" type="password" name="password" required>
+                    </div>
+                    <div>
+                        <input class="input" placeholder="Confirm Password" type="password" name="confirmPassword" required>
+                    </div>
+                </div>
+                <div class="side-menu-buttons">
+                    <button type="submit" class="btn cursor-pointer">
+                        <strong>Register</strong>
+                        <div id="container-stars">
+                            <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button>
+                    <button type="button" class="btn cursor-pointer" onclick="showLogin()">
+                        <strong>Login</strong>
+                        <div id="container-stars">
+                            <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button>
+                </div>
+                </!form>
+            </div>
+        }
+        else
+        {
+            <div class="username-side">@ViewBag.Username</div>
+            <div>
+                @if(User.IsInRole(nameof(Roles.Administrator)))
+                {
+                    <a href="miku/dashboard">
+                        <div type="button" class="btn cursor-pointer">
+                            <strong>Dashboard</strong>
+                            <div id="container-stars">
+                                <div id="stars"></div>
+                            </div>
+
+                            <div id="glow">
+                                <div class="circle"></div>
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </a>
+                }
+                <a href="user/settings">
+                    <div type="button" class="btn cursor-pointer">
+                        <strong>Settings</strong>
+                        <div id="container-stars">
+                            <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="logout">
+                    <div type="button" class="btn cursor-pointer">
+                        <strong>Logout</strong>
+                        <div id="container-stars">
+                            <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="../Views/Shared/_Header.cshtml.js" asp-append-version="true"></script>

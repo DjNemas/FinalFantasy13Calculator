@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace RestAPI.Controllers
+namespace Shared.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -21,14 +21,22 @@ namespace RestAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status409Conflict, "text/plain")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            if (await _userService.GetUserAsync(request.Username) is not null)
-                return Conflict("User with the given username already exists.");
+            if (await _userService.GetUserAsync(request.Email) is not null)
+                return Conflict("User with the given email already exists.");
 
             await _authService.HashPassword(request.Password, out var passwordHash, out var passwordSalt);
 
+            var username = string.Empty;
+            do 
+            {
+                username = Generator.GenerateUniqueUsername();
+            } 
+            while (await _userService.UsernameExist(username));
+
             var user = new User
             {
-                Username = request.Username,
+                Email = request.Email,
+                Username = username,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Role = await _userService.GetUserRoleAsync(Roles.User)
@@ -42,7 +50,7 @@ namespace RestAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest, "text/plain")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            var user = await _userService.GetUserAsync(request.Username);
+            var user = await _userService.GetUserAsync(request.Email);
             if (user is null)
                 return BadRequest("Wrong Username or Password");
 
@@ -67,7 +75,7 @@ namespace RestAPI.Controllers
                 return BadRequest("Unauthorized");
 
             if (session.ExpirationDateResetToken.UtcDateTime <= DateTime.UtcNow)
-                return Unauthorized("Token expired. Please log in Again.");
+                return Unauthorized("Token expired. Please log in again.");
 
             var newSession = _authService.GenerateSession(session.User);
             newSession.Id = session.Id;

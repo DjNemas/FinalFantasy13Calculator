@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Net.Http.Headers;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace Homepage.Middleware
 {
@@ -23,13 +21,14 @@ namespace Homepage.Middleware
                 // Prüfen, ob der Header existiert
                 if (context.Session.GetString("miku") is string bearerToken)
                 {
-                    var user = await authService.GetUser(bearerToken);
+                    var user = await authService.GetUserAsync(bearerToken);
                     if (user.Success)
                     {
                         // Claims erstellen
                         var claims = new List<Claim>()
                         {
-                            new Claim(ClaimTypes.NameIdentifier, user.Data.Id.ToString()),
+                            new Claim(ClaimTypes.NameIdentifier, user.Data!.Id.ToString()),
+                            new Claim(ClaimTypes.Name, user.Data.Username),
                             new Claim(ClaimTypes.Role, Enum.GetName(user.Data.Role)!)
                         };
 

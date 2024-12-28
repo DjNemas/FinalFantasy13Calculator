@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RestAPI.Database;
+using Shared.Database;
 
 #nullable disable
 
-namespace RestAPI.Migrations
+namespace Shared.Migrations
 {
     [DbContext(typeof(FFXIIIDbContext))]
     [Migration("20241221070141_SeedRoles")]

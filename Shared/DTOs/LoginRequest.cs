@@ -1,8 +1,13 @@
-﻿namespace Shared.DTOs
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace Shared.DTOs
 {
     public class LoginRequest
     {
-        public required string Username { get; set; }
+        [EmailAddress]
+        public required string Email { get; set; }
+        [PasswordPropertyText]
         public required string Password { get; set; }
     }
 }

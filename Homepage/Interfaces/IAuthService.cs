@@ -2,8 +2,10 @@
 {
     public interface IAuthService
     {
-        public Task<RequestResponse<LoginResponse>> LoginAsync(string username, string password);
+        public Task<RequestResponse<LoginResponse>> LoginAsync(string email, string password);
 
-        public Task<RequestResponse<GetUserResponse>> GetUser(string bearerToken);
+        public Task<RequestResponse<UserResponse>> GetUserAsync(string bearerToken);
+
+        public Task<RequestResponse<string>> RegisterAsync(string email, string password);
     }
 }

@@ -1,7 +1,7 @@
-﻿using RestAPI.Database.Models;
+﻿using Shared.Database.Models;
 using System.Security.Cryptography;
 
-namespace RestAPI.Services
+namespace Shared.Services
 {
     public class AuthService : IAuthService
     {

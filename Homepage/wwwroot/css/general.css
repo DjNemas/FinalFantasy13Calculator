@@ -1,0 +1,320 @@
+/*@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}*/
+
+@font-face {
+    font-family: 'Vocaloid-Regular';
+    src: url('/res/fonts/VOC-RE.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vocaloid-Italic';
+    src: url('/res/fonts/VOC-IT.ttf') format('truetype');
+    font-style: italic;
+}
+
+body {
+    margin: 0;
+    color: #f1f1f1;
+    height: 3000px;
+    font-family: Vocaloid-Regular;
+}
+
+.background-main-color {
+    background-color: #01c7bb;
+}
+
+.position-flex-column-center {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.hide {
+    display: none !important;
+}
+
+/* Cursors */
+.disable-pointer-events {
+    pointer-events: none;
+}
+
+.cursor-auto {
+    animation-name: ani-auto-cursor;
+    animation-duration: 0.64s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes ani-auto-cursor {
+    0% {
+        cursor: url('/res/coursers/auto_1_0.01s.png'), auto;
+    }
+    12.5% {
+        cursor: url('/res/coursers/auto_2_0.01s.png'), auto;
+    }
+    25% {
+        cursor: url('/res/coursers/auto_3_0.01s.png'), auto;
+    }
+    37.5% {
+        cursor: url('/res/coursers/auto_4_0.01s.png'), auto;
+    }
+    50% {
+        cursor: url('/res/coursers/auto_5_0.01s.png'), auto;
+    }
+    62.5% {
+        cursor: url('/res/coursers/auto_6_0.01s.png'), auto;
+    }
+    75% {
+        cursor: url('/res/coursers/auto_7_0.01s.png'), auto;
+    }
+    87.5% {
+        cursor: url('/res/coursers/auto_8_0.01s.png'), auto;
+    }
+    100% {
+        cursor: url('/res/coursers/auto_8_0.01s.png'), auto;
+    }
+}
+
+button,
+.cursor-pointer {
+    animation-name: ani-pointer-cursor !important;
+    animation-duration: 0.64s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes ani-pointer-cursor {
+    0% {
+        cursor: url('/res/coursers/pointer_1_0.01s.png'), pointer;
+    }
+    12.5% {
+        cursor: url('/res/coursers/pointer_2_0.01s.png'), pointer;
+    }
+
+    25% {
+        cursor: url('/res/coursers/pointer_3_0.01s.png'), pointer;
+    }
+
+    37.5% {
+        cursor: url('/res/coursers/pointer_4_0.01s.png'), pointer;
+    }
+
+    50% {
+        cursor: url('/res/coursers/pointer_5_0.01s.png'), pointer;
+    }
+
+    62.5% {
+        cursor: url('/res/coursers/pointer_6_0.01s.png'), pointer;
+    }
+
+    75% {
+        cursor: url('/res/coursers/pointer_7_0.01s.png'), pointer;
+    }
+
+    87.5% {
+        cursor: url('/res/coursers/pointer_8_0.01s.png'), pointer;
+    }
+
+    100% {
+        cursor: url('/res/coursers/pointer_8_0.01s.png'), pointer;
+    }
+}
+
+/* Button */
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    overflow: hidden;
+    height: 3rem;
+    background-size: 300% 300%;
+    backdrop-filter: blur(1rem);
+    border-radius: 5rem;
+    transition: 0.5s;
+    animation: gradient_301 5s ease infinite;
+    border: double 4px transparent;
+    background-image: linear-gradient(#212121, #212121), linear-gradient( 137.48deg, #22c3b3 10%, #2798d2 45%, #01c7bb 67%, #22c3b3 87% );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+#container-stars {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: 0.5s;
+    backdrop-filter: blur(1rem);
+    border-radius: 5rem;
+}
+
+strong {
+    z-index: 2;
+    font-family: "Avalors Personal Use";
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #ffffff;
+    text-shadow: 0 0 4px white;
+}
+
+#glow {
+    position: absolute;
+    display: flex;
+    width: 12rem;
+}
+
+.circle {
+    width: 100%;
+    height: 30px;
+    filter: blur(2rem);
+    animation: pulse_3011 4s infinite;
+    z-index: -1;
+}
+
+    .circle:nth-of-type(1) {
+        background: rgba(254, 83, 186, 0.636);
+    }
+
+    .circle:nth-of-type(2) {
+        background: rgba(142, 81, 234, 0.704);
+    }
+
+.btn:hover #container-stars {
+    z-index: 1;
+    background-color: #212121;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.btn:active {
+    border: double 4px #fe53bb;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    animation: none;
+}
+
+    .btn:active .circle {
+        background: #fe53bb;
+    }
+
+#stars {
+    position: relative;
+    background: transparent;
+    width: 200rem;
+    height: 200rem;
+}
+
+    #stars::after {
+        content: "";
+        position: absolute;
+        top: -10rem;
+        left: -100rem;
+        width: 100%;
+        height: 100%;
+        animation: animStarRotate 90s linear infinite;
+    }
+
+    #stars::after {
+        background-image: radial-gradient(#ffffff 1px, transparent 1%);
+        background-size: 50px 50px;
+    }
+
+    #stars::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -50%;
+        width: 170%;
+        height: 500%;
+        animation: animStar 60s linear infinite;
+    }
+
+    #stars::before {
+        background-image: radial-gradient(#ffffff 1px, transparent 1%);
+        background-size: 50px 50px;
+        opacity: 0.5;
+    }
+
+@keyframes animStar {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-135rem);
+    }
+}
+
+@keyframes animStarRotate {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0);
+    }
+}
+
+@keyframes gradient_301 {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes pulse_3011 {
+    0% {
+        transform: scale(0.75);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.75);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* inputs */
+.input {
+    margin-top: 1rem;
+    border-radius: 10px;
+    outline: 2px solid #00a6fb;
+    border: 0;
+    font-family: "Montserrat", sans-serif;
+    background-color: #d6f1ff;
+    outline-offset: 3px;
+    padding: 10px 12.5px;
+    transition: all 0.2s ease;
+    width: -webkit-fill-available;
+}
+
+    .input:hover {
+        background-color: #fff;
+    }
+
+    .input:focus {
+        outline-offset: -6px;
+        background-color: #d6f1ff;
+    }
+
+

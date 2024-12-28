@@ -1,0 +1,10 @@
+﻿<div id="message-box" class="message-content
+    @(TempData ["IsError"] is not null && (bool)TempData["IsError"]! ? "error" : string.Empty)
+    @(TempData ["Message"] is null ? "hide" : string.Empty)">
+        <div class="message">
+            <p id="message">@TempData["Message"]</p>
+        </div>
+        <div onclick="clearMessage()" class="message-close-button cursor-pointer">&#10005;</div>
+</div>
+
+<script src="../Views/Shared/_Message.cshtml.js" asp-append-version="true"></script>

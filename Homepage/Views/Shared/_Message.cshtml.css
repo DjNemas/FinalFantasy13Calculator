@@ -1,0 +1,31 @@
+﻿.message-content {
+    position: fixed;
+    display: flex;
+    background: #67e532;
+    border-radius: 5px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+}
+
+.error {
+    background: #f1386a;
+}
+
+.message {
+    display: flex;
+    justify-content: center;
+    margin: 0 30px;
+}
+
+.message-close-button {
+    background-color: transparent;
+    color: #000000;
+    font-size: 15px;
+    transition: transform 0.3s;
+    margin-right: 5px;
+}
+
+    .message-close-button:hover {
+        transform: scale(1.2) translateY(3px);
+    }

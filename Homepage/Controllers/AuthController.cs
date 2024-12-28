@@ -1,44 +1,60 @@
 ﻿using Homepage.Models.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Security.Claims;
 
 namespace Homepage.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(
+            IWebHostEnvironment environment,
+            HttpClient httpClient,
+            IAuthService authService) : base(environment, httpClient)
         {
             _authService = authService;
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(string email, string password)
         {
-            var httpContext = Request;
-            var response = await _authService.LoginAsync(username, password);
+            var response = await _authService.LoginAsync(email, password);
 
-            var viewModel = new IndexViewModel();
             if (!response.Success)
             {
-                viewModel.Message = response.Message;
-                return RedirectToAction("Index", "Home", viewModel);
+                TempData["Message"] = response.Message;
+                TempData["IsError"] = true;
+                return RedirectToAction("Index", "Home");
             }
             else
             {
                 HttpContext.Session.SetString("miku", response.Data!.BearerToken);
 
-                viewModel.Message = "Login successful!";
-                viewModel.IsSuccessMessage = true;
-                return RedirectToAction("Index", "Home", viewModel);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(string email, string password)
+        {
+            var response = await _authService.RegisterAsync(email, password);
+            if (!response.Success)
+            {
+                TempData["Message"] = response.Message;
+                TempData["IsError"] = true;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["Message"] = response.Data;
+                TempData["IsError"] = false;
+                return RedirectToAction("Index", "Home");
             }
         }
 
         [HttpGet("Logout"), Authorize]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             HttpContext.Session.Remove("miku");
 

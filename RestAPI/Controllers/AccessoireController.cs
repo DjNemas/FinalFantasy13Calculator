@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
-namespace RestAPI.Controllers
+namespace Shared.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]

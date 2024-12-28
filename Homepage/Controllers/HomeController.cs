@@ -7,12 +7,15 @@ using System.Diagnostics;
 
 namespace Homepage.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HttpClient _httpClient;
 
-        public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
+        public HomeController(
+            IWebHostEnvironment environment,
+            HttpClient httpClient,
+            ILogger<HomeController> logger) : base(environment, httpClient)
         {
             _logger = logger;
             _httpClient = httpClient;
@@ -20,8 +23,6 @@ namespace Homepage.Controllers
 
         public IActionResult Index(IndexViewModel? viewModel = null)
         {
-            var test = HttpContext.Session.GetString("miku");
-            var httpClient = _httpClient;
             viewModel = viewModel ?? new IndexViewModel();
             viewModel.FillNavigationContent();
             return View(viewModel);

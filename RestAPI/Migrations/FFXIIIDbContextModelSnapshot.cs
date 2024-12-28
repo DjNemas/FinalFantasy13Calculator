@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RestAPI.Database;
+using Shared.Database;
 
 #nullable disable
 
-namespace RestAPI.Migrations
+namespace Shared.Migrations
 {
     [DbContext(typeof(FFXIIIDbContext))]
     partial class FFXIIIDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace RestAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RestAPI.Database.Models.Item", b =>
+            modelBuilder.Entity("Shared.Database.Models.Item", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace RestAPI.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.Session", b =>
+            modelBuilder.Entity("Shared.Database.Models.Session", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,13 +113,23 @@ namespace RestAPI.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.User", b =>
+            modelBuilder.Entity("Shared.Database.Models.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AvatarImageMimeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Base64AvatarImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -143,7 +153,7 @@ namespace RestAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.UserRole", b =>
+            modelBuilder.Entity("Shared.Database.Models.UserRole", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,9 +182,9 @@ namespace RestAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.Accessoire", b =>
+            modelBuilder.Entity("Shared.Database.Models.Accessoire", b =>
                 {
-                    b.HasBaseType("RestAPI.Database.Models.Item");
+                    b.HasBaseType("Shared.Database.Models.Item");
 
                     b.Property<long?>("MaxValue")
                         .HasColumnType("bigint");
@@ -190,9 +200,9 @@ namespace RestAPI.Migrations
                     b.HasDiscriminator().HasValue("Accessoire");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.Weapon", b =>
+            modelBuilder.Entity("Shared.Database.Models.Weapon", b =>
                 {
-                    b.HasBaseType("RestAPI.Database.Models.Item");
+                    b.HasBaseType("Shared.Database.Models.Item");
 
                     b.Property<long>("MaxMagicDamage")
                         .HasColumnType("bigint");
@@ -214,9 +224,9 @@ namespace RestAPI.Migrations
                     b.HasDiscriminator().HasValue("Weapon");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.Session", b =>
+            modelBuilder.Entity("Shared.Database.Models.Session", b =>
                 {
-                    b.HasOne("RestAPI.Database.Models.User", "User")
+                    b.HasOne("Shared.Database.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -225,9 +235,9 @@ namespace RestAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.User", b =>
+            modelBuilder.Entity("Shared.Database.Models.User", b =>
                 {
-                    b.HasOne("RestAPI.Database.Models.UserRole", "Role")
+                    b.HasOne("Shared.Database.Models.UserRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -236,18 +246,18 @@ namespace RestAPI.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.Accessoire", b =>
+            modelBuilder.Entity("Shared.Database.Models.Accessoire", b =>
                 {
-                    b.HasOne("RestAPI.Database.Models.Accessoire", "UpgradeToAccessoire")
+                    b.HasOne("Shared.Database.Models.Accessoire", "UpgradeToAccessoire")
                         .WithMany()
                         .HasForeignKey("UpgradeToAccessoireId");
 
                     b.Navigation("UpgradeToAccessoire");
                 });
 
-            modelBuilder.Entity("RestAPI.Database.Models.Weapon", b =>
+            modelBuilder.Entity("Shared.Database.Models.Weapon", b =>
                 {
-                    b.HasOne("RestAPI.Database.Models.Weapon", "UpgradeToWeapon")
+                    b.HasOne("Shared.Database.Models.Weapon", "UpgradeToWeapon")
                         .WithMany()
                         .HasForeignKey("UpgradeToWeaponId");
 

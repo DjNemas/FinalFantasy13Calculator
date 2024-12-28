@@ -4,9 +4,8 @@ namespace Shared.DTOs
 {
     public class RegisterRequest
     {
-        
-        [StringLength(30, MinimumLength = 4)]
-        public required string Username { get; set; }
+        [DataType(DataType.EmailAddress)]
+        public required string Email { get; set; }
 
         [DataType(DataType.Password)]
         [StringLength(255, MinimumLength = 12)]

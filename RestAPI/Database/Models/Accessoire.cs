@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestAPI.Database.Models
+namespace Shared.Database.Models
 {
     public class Accessoire : Item
     {

@@ -1,19 +1,19 @@
-global using RestAPI.Database;
-global using RestAPI.Database.Models;
-global using RestAPI.Interfaces;
-global using RestAPI.Services;
+global using Shared.Database;
+global using Shared.Database.Models;
+global using Shared.Interfaces;
+global using Shared.Services;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.EntityFrameworkCore;
 global using System.Text;
-global using RestAPI.Utils;
+global using Shared.Utils;
 global using Shared.DTOs;
 global using Shared.Enums;
 using Microsoft.OpenApi.Models;
-using RestAPI.Middlewares;
+using Shared.Middlewares;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text.Json.Serialization;
 
-namespace RestAPI
+namespace Shared
 {
     public class Program
     {
@@ -49,9 +49,13 @@ namespace RestAPI
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
+            // Scopes
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IAccessoireService, AccessoireService>();
             builder.Services.AddScoped<IUserService, UserService>();
+
+            // Singleton
+            builder.Services.AddSingleton<ImageUtils>();
 
             var app = builder.Build();
 

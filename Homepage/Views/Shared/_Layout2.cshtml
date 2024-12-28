@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/Homepage.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/general.css" asp-append-version="true" />
+</head>
+<body class="background-main-color cursor-auto">
+    <partial name="_Message" />
+    <header>
+        <partial name="_Header" />
+    </header>
+
+    <main>
+        <div>
+            <main role="main" class="pb-3 mt-4">
+                @RenderBody()
+            </main>
+        </div>
+    </main>
+
+    <footer>
+        <center>
+            <div style="
+                        position: fixed;
+                        align-items:center;
+                        bottom: 0px;
+                        left: 0;
+                        right: 0;
+                        padding-bottom: 15px;">
+                <div>
+                &copy;HatsuneNemas 2024 - @DateTime.UtcNow.Year
+                </div>
+            </div>
+        </center>
+    </footer>
+
+    <script src="~/js/general.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

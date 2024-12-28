@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var avatarSrc = $"data:{ViewBag.AvatarMimeType};base64,{ViewBag.AvatarImage}";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,6 +16,13 @@
 </head>
 <body class="background-main-color">
     <header>
+        @if (System.Diagnostics.Debugger.IsAttached)
+        {
+            <a href="https://localhost:4001/swagger" class="btn btn-primary" target="_blank">
+                Swagger
+            </a>
+
+        }
         <div class="p-3">
             <div class="row">
 
@@ -27,7 +37,8 @@
                     {
                         <div class="d-flex justify-content-end">
                             <a href="#" class="btn" role="button" id="openSide">
-                                <img src="~/res/image/shared/default-avatar.jpg" alt="Avatar" class="rounded-circle" width="50" height="50" />
+                                <span>@ViewBag.Username</span>
+                                <img src="@avatarSrc" alt="Avatar" class="rounded-circle" width="50" height="50" />
                             </a>
                         </div>
 
@@ -39,7 +50,7 @@
                                 <div class="col me-3">
                                     <div class="row">
                                         <div class="d-flex flex-column align-items-center">
-                                            <img src="~/res/image/shared/default-avatar.jpg" alt="Avatar" class="rounded-circle" width="50" height="50" />
+                                            <img src="@avatarSrc" alt="Avatar" class="rounded-circle" width="50" height="50" />
                                         </div>
                                     </div>
                                     @if (User.IsInRole("Administrator"))
@@ -61,8 +72,9 @@
                     else
                     {
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary" type="button" id="openSide">
-                                Login
+                            <button class="bg-transparent border-0" type="button" id="openSide">
+                                <span>Login</span>
+                                <img src="@avatarSrc" alt="Avatar" class="rounded-circle" width="50" height="50" />
                             </button>
                         </div>
 
@@ -75,8 +87,8 @@
                                 <form method="post" action="/Login">
                                     <div class="row m-0">
                                         <div class="col">
-                                            <label for="username">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" required />
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" required />
                                         </div>
                                         <div class="col">
                                             <label for="password">Password</label>

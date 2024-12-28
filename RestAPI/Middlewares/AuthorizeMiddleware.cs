@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
-namespace RestAPI.Middlewares
+namespace Shared.Middlewares
 {
     public class AuthorizeMiddleware
     {

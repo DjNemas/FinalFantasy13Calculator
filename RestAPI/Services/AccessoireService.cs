@@ -1,4 +1,4 @@
-﻿namespace RestAPI.Services
+﻿namespace Shared.Services
 {
     public class AccessoireService : IAccessoireService
     {

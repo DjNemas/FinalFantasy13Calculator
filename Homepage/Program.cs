@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Homepage.Middleware;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.FileProviders;
 
 namespace Homepage
 {
@@ -18,7 +20,7 @@ namespace Homepage
             builder.Services.AddAuthentication().AddBearerToken();
             builder.Services.AddSession();
 
-            // Add services to the container.
+            // Add services to the container.            builder
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<IAuthService, AuthService>();
