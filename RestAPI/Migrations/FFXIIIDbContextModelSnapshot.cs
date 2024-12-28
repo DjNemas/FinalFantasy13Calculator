@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shared.Database;
+using RestAPI.Database;
 
 #nullable disable
 
-namespace Shared.Migrations
+namespace RestAPI.Migrations
 {
     [DbContext(typeof(FFXIIIDbContext))]
     partial class FFXIIIDbContextModelSnapshot : ModelSnapshot

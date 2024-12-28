@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shared.Database;
+using RestAPI.Database;
 
 #nullable disable
 
-namespace Shared.Migrations
+namespace RestAPI.Migrations
 {
     [DbContext(typeof(FFXIIIDbContext))]
     [Migration("20241221065909_InitialCreate")]

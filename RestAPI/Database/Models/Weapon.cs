@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shared.Database.Models
+namespace RestAPI.Database.Models
 {
     public class Weapon : Item
     {

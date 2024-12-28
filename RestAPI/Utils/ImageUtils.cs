@@ -1,4 +1,4 @@
-﻿namespace Shared.Utils
+﻿namespace RestAPI.Utils
 {
     public class ImageUtils
     {

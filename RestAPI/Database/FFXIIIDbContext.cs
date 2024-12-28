@@ -1,4 +1,4 @@
-﻿namespace Shared.Database
+﻿namespace RestAPI.Database
 {
     public class FFXIIIDbContext : DbContext
     {

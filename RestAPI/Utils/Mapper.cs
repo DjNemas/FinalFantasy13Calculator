@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Shared.Utils
+namespace RestAPI.Utils
 {
     public class Mapper
     {

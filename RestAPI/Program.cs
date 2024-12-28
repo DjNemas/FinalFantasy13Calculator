@@ -1,19 +1,18 @@
-global using Shared.Database;
-global using Shared.Database.Models;
-global using Shared.Interfaces;
-global using Shared.Services;
+global using RestAPI.Database;
+global using RestAPI.Database.Models;
+global using RestAPI.Interfaces;
+global using RestAPI.Services;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.EntityFrameworkCore;
 global using System.Text;
-global using Shared.Utils;
+global using RestAPI.Utils;
 global using Shared.DTOs;
 global using Shared.Enums;
 using Microsoft.OpenApi.Models;
-using Shared.Middlewares;
+using RestAPI.Middlewares;
 using Swashbuckle.AspNetCore.Filters;
-using System.Text.Json.Serialization;
 
-namespace Shared
+namespace RestAPI
 {
     public class Program
     {

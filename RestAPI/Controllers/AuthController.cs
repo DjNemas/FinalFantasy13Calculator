@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Shared.Controllers
+namespace RestAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]

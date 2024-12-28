@@ -1,4 +1,4 @@
-﻿namespace Shared.Database.Models
+﻿namespace RestAPI.Database.Models
 {
     public class Session
     {

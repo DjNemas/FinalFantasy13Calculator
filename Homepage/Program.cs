@@ -1,14 +1,10 @@
+global using Homepage.Interfaces;
+global using Homepage.Models.RestAPI;
 global using Homepage.Service;
 global using Shared.DTOs;
 global using Shared.Enums;
-global using Homepage.Interfaces;
-global using Homepage.Models.RestAPI;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Server.HttpSys;
 using Homepage.Middleware;
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Homepage
 {
@@ -26,7 +22,7 @@ namespace Homepage
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("RestAPI:Domain").Value!) });
             var test = builder.Configuration.GetSection("RestAPI:Domain").Value!;
-                
+
 
             var app = builder.Build();
 

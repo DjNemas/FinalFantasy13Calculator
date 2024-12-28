@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Shared.Migrations
+namespace RestAPI.Migrations
 {
     /// <inheritdoc />
     public partial class Avatar : Migration
