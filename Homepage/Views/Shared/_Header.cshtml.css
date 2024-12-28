@@ -12,11 +12,15 @@
 }
 
 .main-logo {
+    display: inline-block;
     height: 100%;
     margin-left: 5px;
     margin-top: 5px;
     border-radius: 3px;
 }
+    .main-logo img {
+        height: -webkit-fill-available;
+    }
 
 .avatar-img {
     height: 75%;
